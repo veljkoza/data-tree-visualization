@@ -1,0 +1,16 @@
+{
+  "name": "data-tree-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "css": "node-sass --include-path scss style.scss style.css",
+    "watch": "nodemon -e scss -x npm run css"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.12"
+  }
+}

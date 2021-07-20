@@ -86,7 +86,7 @@ $border-width: 1px;
   position: relative;
   top: $border-width;
   height: 200px;
-  max-width: 50px;
+  width: 50px;
   justify-content: center;
   align-items: center;
 }
@@ -95,18 +95,4 @@ span {
   display: block;
   transform-origin: bottom;
   margin: 0 auto;
-}
-
-.tree li a:hover,
-.tree li a:hover + ul li a {
-  background: #e9453f;
-  color: #fff;
-  border: $border-width solid #e9453f;
-}
-
-.tree li a:hover + ul li::after,
-.tree li a:hover + ul li::before,
-.tree li a:hover + ul::before,
-.tree li a:hover + ul ul::before {
-  border-color: #e9453f;
 }

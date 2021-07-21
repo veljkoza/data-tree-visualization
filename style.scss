@@ -13,7 +13,7 @@ $border-width: 1px;
 
 .tree ul {
   position: relative;
-  padding: 1em 0;
+  padding: 3em 0;
   white-space: nowrap;
   margin: 0 auto;
   text-align: center;
@@ -30,7 +30,7 @@ $border-width: 1px;
   text-align: center;
   list-style-type: none;
   position: relative;
-  padding: 1em 0.5em 0 0.5em;
+  padding: 3em 0.5em 0 0.5em;
   &::before,
   &::after {
     content: "";
@@ -39,7 +39,7 @@ $border-width: 1px;
     right: 50%;
     border-top: $border-width solid #ccc;
     width: 50%;
-    height: 1em;
+    height: 3em;
   }
   &::after {
     right: auto;
@@ -73,7 +73,7 @@ $border-width: 1px;
   left: 50%;
   border-left: $border-width solid #ccc;
   width: 0;
-  height: 1em;
+  height: 3em;
 }
 
 .tree li a {

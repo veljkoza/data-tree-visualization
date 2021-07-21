@@ -1,5 +1,4 @@
-const treeNodes = [
-  {
+const treeNodes = [{
     nodeId: 1,
     parentId: null,
     label: "ROOT",
@@ -44,31 +43,6 @@ const treeNodes = [
     parentId: 6,
     label: "H",
   },
-  {
-    nodeId: 10,
-    parentId: 4,
-    label: "J",
-  },
-  {
-    nodeId: 11,
-    parentId: 4,
-    label: "J",
-  },
-  {
-    nodeId: 12,
-    parentId: 5,
-    label: "O",
-  },
-  {
-    nodeId: 13,
-    parentId: 5,
-    label: "O",
-  },
-  {
-    nodeId: 14,
-    parentId: 13,
-    label: "O",
-  },
 ];
 
 const rootUl = document.getElementById("root-ul");
@@ -79,12 +53,21 @@ const getRootNode = () => {
 };
 
 rootNode = getRootNode();
-
+const isNodeParent = (node) => {
+  let nodeIsParent = false;
+  let foundNode = treeNodes.filter((x) => x.parentId === node.nodeId)[0];
+  if (foundNode) {
+    nodeIsParent = true;
+  }
+  return nodeIsParent;
+};
 const drawRoot = () => {
   const rootLi = document.createElement("li");
   const innerUl = document.createElement("ul");
 
-  let { label } = rootNode;
+  let {
+    label
+  } = rootNode;
 
   rootLi.innerHTML = `<a href='#'><span>${label}</span></a>`;
   let childUl = rootLi.appendChild(innerUl);
@@ -112,14 +95,26 @@ const drawNodesFrom = (node, ulElement) => {
   }
 };
 
+
+
 const drawNode = (node, ulElement) => {
   const newLi = document.createElement("li");
   const innerUl = document.createElement("ul");
 
-  let { label } = node;
+  let {
+    label
+  } = node;
+
+  let nodeHasChildren = isNodeParent(node);
+  let childUl
 
   newLi.innerHTML = `<a href='#'><span>${label}</span></a>`;
-  let childUl = newLi.appendChild(innerUl);
+
+  // Dont append UL if node has no children
+  if (nodeHasChildren) {
+    childUl = newLi.appendChild(innerUl);
+
+  }
   ulElement.appendChild(newLi);
 
   return childUl;

@@ -188,10 +188,11 @@ const addDragAndDrop = () => {
     let dropOffParentId = parseInt(targetedDroppOff.getAttribute('data-nodeId'))
     let foundNode = findNodeById(draggedNodeId)
     let dropOffNode = findNodeById(dropOffParentId)
-    
+
     let dropOffNodeChildren = getNodeChildrenById(dropOffParentId)
     let draggedNodeChildren = getNodeChildrenById(draggedNodeId)
     let leftNode = dropOffNodeChildren[0]
+
     // dont allow dragging nodes to the existing parent
     if (foundNode.parentId === dropOffParentId) return
     if (!leftNode && foundNode.parentId === null) {
@@ -207,17 +208,13 @@ const addDragAndDrop = () => {
       }
 
       foundNode.label = temp.label
-    }
-  
-    else if(dropOffNodeChildren.length === 1){
-      if(draggedNodeChildren[0]){
+    } else if (dropOffNodeChildren.length === 1) {
+      if (draggedNodeChildren[0]) {
         draggedNodeChildren[0].parentId = foundNode.parentId
 
       }
       foundNode.parentId = dropOffParentId
-
-    }
-    else if (dropOffNodeChildren.length  ) {
+    } else if (dropOffNodeChildren.length) {
 
       let temp = JSON.parse(JSON.stringify(leftNode))
 
@@ -229,7 +226,7 @@ const addDragAndDrop = () => {
         childNode.parentId = leftNode.nodeId
       })
 
-      
+
     } else {
       foundNode.parentId = dropOffParentId
 

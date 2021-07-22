@@ -13,36 +13,36 @@ const treeNodes = [{
     parentId: 1,
     label: "B",
   },
-  {
-    nodeId: 4,
-    parentId: 2,
-    label: "C",
-  },
-  {
-    nodeId: 5,
-    parentId: 2,
-    label: "D",
-  },
-  {
-    nodeId: 6,
-    parentId: 3,
-    label: "E",
-  },
-  {
-    nodeId: 7,
-    parentId: 3,
-    label: "F",
-  },
-  {
-    nodeId: 8,
-    parentId: 6,
-    label: "G",
-  },
-  {
-    nodeId: 9,
-    parentId: 6,
-    label: "H",
-  },
+  // {
+  //   nodeId: 4,
+  //   parentId: 2,
+  //   label: "C",
+  // },
+  // {
+  //   nodeId: 5,
+  //   parentId: 2,
+  //   label: "D",
+  // },
+  // {
+  //   nodeId: 6,
+  //   parentId: 3,
+  //   label: "E",
+  // },
+  // {
+  //   nodeId: 7,
+  //   parentId: 3,
+  //   label: "F",
+  // },
+  // {
+  //   nodeId: 8,
+  //   parentId: 6,
+  //   label: "G",
+  // },
+  // {
+  //   nodeId: 9,
+  //   parentId: 6,
+  //   label: "H",
+  // },
 ];
 
 const rootUl = document.getElementById("root-ul");

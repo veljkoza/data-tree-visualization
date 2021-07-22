@@ -5,10 +5,14 @@ body {
 .tree {
   height: 800px; }
 
+#root-ul > li:first-child::before {
+  border: none; }
+
 .tree ul {
   position: relative;
   white-space: nowrap;
-  text-align: center; }
+  text-align: center;
+  padding-left: 80px; }
   .tree ul::after {
     content: "";
     display: table;
@@ -20,39 +24,43 @@ body {
   text-align: center;
   list-style-type: none;
   position: relative;
-  padding: 3em 0.5em 0 0.5em; }
-  .tree li::before, .tree li::after {
+  padding: 3em; }
+  .tree li::before {
     content: "";
     position: absolute;
-    top: 0;
-    right: 50%;
+    top: 50%;
+    right: 0;
+    left: 0;
+    width: 4.4em;
+    height: 50%; }
+  .tree li:last-child {
+    margin-top: auto; }
+  .tree li:only-child::before {
+    border-top: none !important;
+    border-left: none !important; }
+  .tree li:first-child::before {
+    left: -1.4em;
     border-top: 1px solid #ccc;
-    width: 50%;
-    height: 3em; }
-  .tree li::after {
-    right: auto;
-    left: 50%;
     border-left: 1px solid #ccc; }
-  .tree li:only-child::after, .tree li:only-child::before {
-    display: none; }
-  .tree li:only-child {
-    padding-top: 0; }
-  .tree li:first-child::before, .tree li:last-child::after {
-    border: 0 none; }
   .tree li:last-child::before {
-    border-right: 1px solid #ccc;
+    top: -0.3%;
+    left: -1.4em;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc; }
+  .tree li:last-child::before {
     border-radius: 0 5px 0 0; }
-  .tree li:first-child::after {
+  .tree li:first-child::before {
     border-radius: 5px 0 0 0; }
 
 .tree ul ul::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 50%;
-  border-left: 1px solid #ccc;
+  left: -0;
+  bottom: 50%;
+  right: 0;
+  border-bottom: 1px solid #ccc;
   width: 0;
-  height: 3em; }
+  width: 4em; }
 
 .tree li button {
   background: white;
@@ -68,30 +76,41 @@ body {
   height: 50px;
   width: 200px;
   justify-content: center;
-  align-items: center; }
-
-.tree li button .drop-off {
-  display: none;
-  justify-content: center;
   align-items: center;
+  cursor: pointer; }
+
+.node-container {
+  position: relative; }
+
+.node-container .drop-off {
+  display: grid;
+  place-items: center;
   position: absolute;
   height: 2em;
   width: 2em;
   background: white;
   color: #ccc;
   border-radius: 50%;
-  bottom: -4.5em;
-  left: 50%;
+  top: calc(50% - 1em);
+  right: -75px;
   border: 1px solid #ccc;
-  z-index: 5;
-  transform: translateX(-50%); }
+  z-index: 5; }
+
+.hold {
+  border: solid #ccc 4px; }
+
+.node-container .drop-off.hovered {
+  border: dashed black 3px; }
 
 .drop-off p {
   display: block;
   font-size: 1.1rem;
-  padding-bottom: 3px; }
+  padding-bottom: 10px; }
 
 span {
   display: block;
   transform-origin: bottom;
-  margin: 0 auto; }
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  padding-top: 15%; }

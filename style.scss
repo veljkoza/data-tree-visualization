@@ -1,25 +1,24 @@
 body {
   font-family: sans-serif;
   font-size: 15px;
-  padding-top: 10em;
-  overflow-y: hidden;
 }
 
 $border-width: 1px;
 
 .tree {
-  transform: rotate(-90deg);
-  // transform-origin:     36% 33%;
-  transform-origin:     35% 35%;
 
+  height: 800px;
+}
+
+#root-ul > li:first-child::before{
+  border: none;
 }
 
 .tree ul {
   position: relative;
-  padding: 3em 0;
   white-space: nowrap;
-  margin: 0 auto;
   text-align: center;
+  padding-left: 80px;
   &::after {
     content: "";
     display: table;
@@ -28,43 +27,48 @@ $border-width: 1px;
 }
 
 .tree li {
-  display: inline-block;
-  vertical-align: top;
+  display: flex;
+  align-items: center;
   text-align: center;
   list-style-type: none;
   position: relative;
-  padding: 3em 0.5em 0 0.5em;
-  &::before,
-  &::after {
+  padding: 3em;
+  &::before
+   {
     content: "";
     position: absolute;
-    top: 0;
-    right: 50%;
-    border-top: $border-width solid #ccc;
-    width: 50%;
-    height: 3em;
+    top: 50%;
+    right: 0;
+    left: 0;
+    width: 4.4em;
+    height: 50%;
   }
-  &::after {
-    right: auto;
-    left: 50%;
+ 
+  &:last-child{
+    margin-top: auto;
+  }
+
+  &:only-child::before{
+    border-top: none !important;
+    border-left: none !important;
+  }
+  
+  &:first-child::before{
+    left: -1.4em;
+    border-top: $border-width solid #ccc;
     border-left: $border-width solid #ccc;
   }
-  &:only-child::after,
-  &:only-child::before {
-    display: none;
+  &:last-child::before{
+    top: -0.3%;
+    left: -1.4em;
+    border-bottom: $border-width solid #ccc;
+    border-left: $border-width solid #ccc;
   }
-  &:only-child {
-    padding-top: 0;
-  }
-  &:first-child::before,
-  &:last-child::after {
-    border: 0 none;
-  }
+  
   &:last-child::before {
-    border-right: $border-width solid #ccc;
     border-radius: 0 5px 0 0;
   }
-  &:first-child::after {
+  &:first-child::before {
     border-radius: 5px 0 0 0;
   }
 }
@@ -72,12 +76,16 @@ $border-width: 1px;
 .tree ul ul::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 50%;
-  border-left: $border-width solid #ccc;
+  left: -0;
+  bottom: 50%;
+  right: 0;
+  border-bottom: $border-width solid #ccc;
   width: 0;
-  height: 3em;
+  // height: 3em;
+  width: 4em;
 }
+
+
 
 .tree li button {
   background: white;
@@ -90,39 +98,57 @@ $border-width: 1px;
   color: #333;
   position: relative;
   top: $border-width;
-  height: 200px;
-  width: 50px;
+  height: 50px;
+  width: 200px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
-.tree li button .drop-off {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+
+
+
+.node-container{
+  position: relative;
+}
+
+.node-container .drop-off {
+  display: grid;
+  place-items: center;
   position: absolute;
   height: 2em;
   width: 2em;
   background: white;
   color: #ccc;
   border-radius: 50%;
-  bottom: -4.5em;
-  left: 50%;
+  top: calc(50% - 1em);
+  right: -75px;
   border: $border-width solid #ccc;
   z-index: 5;
-  transform: translateX(-50%);
 }
 
+.hold{
+  border: solid #ccc 4px
+}
+
+.node-container .drop-off.hovered{
+  border: dashed black 3px;
+  // background: red
+}
+
+
 .drop-off p {
-  transform: rotate(-90deg);
   display: block;
   font-size: 1.1rem;
-  padding-bottom: 3px;
+  padding-bottom: 10px;
 }
 
 span {
-  transform: rotate(90deg);
   display: block;
   transform-origin: bottom;
   margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  padding-top: 15%;
 }

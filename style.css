@@ -1,11 +1,12 @@
 body {
   font-family: sans-serif;
   font-size: 15px;
-  padding-top: 10em; }
+  padding-top: 10em;
+  overflow-y: hidden; }
 
 .tree {
   transform: rotate(-90deg);
-  transform-origin: 50%; }
+  transform-origin: 35% 35%; }
 
 .tree ul {
   position: relative;
@@ -58,7 +59,9 @@ body {
   width: 0;
   height: 3em; }
 
-.tree li a {
+.tree li button {
+  background: white;
+  box-shadow: -1px 1px 3px rgba(61, 61, 61, 0.315);
   border: 1px solid #ccc;
   padding-right: 0.9em;
   text-decoration: none;
@@ -71,6 +74,28 @@ body {
   width: 50px;
   justify-content: center;
   align-items: center; }
+
+.tree li button .drop-off {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 2em;
+  width: 2em;
+  background: white;
+  color: #ccc;
+  border-radius: 50%;
+  bottom: -4.5em;
+  left: 50%;
+  border: 1px solid #ccc;
+  z-index: 5;
+  transform: translateX(-50%); }
+
+.drop-off p {
+  transform: rotate(-90deg);
+  display: block;
+  font-size: 1.1rem;
+  padding-bottom: 3px; }
 
 span {
   transform: rotate(90deg);

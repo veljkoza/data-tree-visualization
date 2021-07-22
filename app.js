@@ -253,12 +253,10 @@ const addDragAndDrop = () => {
 
   }
   const dragLeave = (e) => {
-    console.log(e.target)
     e.target.classList.remove('hovered')
 
   }
   const dragDrop = (e) => {
-    console.log('dropped')
     e.target.classList.remove('hovered')
     targetedDroppOff = e.target
     changeNodeParent()

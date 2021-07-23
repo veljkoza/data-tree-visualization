@@ -1,4 +1,5 @@
-const treeNodes = [{
+const treeNodes = [
+  {
     nodeId: 1,
     parentId: null,
     label: "ROOT",
@@ -10,7 +11,7 @@ const treeNodes = [{
   },
   {
     nodeId: 3,
-    parentId: 2,
+    parentId: 1,
     label: "B",
   },
   {
@@ -20,17 +21,17 @@ const treeNodes = [{
   },
   {
     nodeId: 5,
-    parentId: 4,
+    parentId: 3,
     label: "D",
   },
   {
     nodeId: 6,
-    parentId: 5,
+    parentId: 2,
     label: "E",
   },
   {
     nodeId: 7,
-    parentId: 6,
+    parentId: 2,
     label: "F",
   },
   {
@@ -40,17 +41,32 @@ const treeNodes = [{
   },
   {
     nodeId: 9,
-    parentId: 8,
+    parentId: 7,
     label: "H",
+  },
+  {
+    nodeId: 10,
+    parentId: 6,
+    label: "O",
+  },
+  {
+    nodeId: 11,
+    parentId: 7,
+    label: "T",
+  },
+  {
+    nodeId: 12,
+    parentId: 8,
+    label: "Q",
   },
 ];
 
 const findNodeById = (nodeId) => {
-  let foundNode = treeNodes.find(x => {
-    return x.nodeId === nodeId
-  })
-  return foundNode
-}
+  let foundNode = treeNodes.find((x) => {
+    return x.nodeId === nodeId;
+  });
+  return foundNode;
+};
 
 const getNodeChildrenById = (nodeId) => {
   let nodeChildren = treeNodes.filter((x) => x.parentId === nodeId);
@@ -71,10 +87,7 @@ const drawRoot = () => {
   const rootLi = document.createElement("li");
   const innerUl = document.createElement("ul");
 
-  let {
-    label,
-    nodeId
-  } = rootNode;
+  let { label, nodeId } = rootNode;
 
   rootLi.innerHTML = `<div class="node-container">
   
@@ -110,45 +123,37 @@ const drawNodesFrom = (node, ulElement) => {
   }
 };
 
+const createNodeElement = (node) => {
+  let { nodeId, label } = node;
 
+  let innerDiv = document.createElement("div");
+  let innerButton = document.createElement("button");
+  let nodeDropOffDiv = document.createElement("div");
+  let labelSpan = document.createElement("span");
 
-const createNodeElement = node => {
-  let {
-    nodeId,
-    label
-  } = node
+  innerDiv.classList.add("node-container");
+  innerButton.setAttribute("draggable", true);
+  innerButton.setAttribute("id", nodeId);
+  innerButton.classList.add("node");
+  labelSpan.innerText = label;
+  nodeDropOffDiv.innerHTML = `-`;
+  nodeDropOffDiv.classList.add("drop-off");
+  nodeDropOffDiv.setAttribute("data-nodeId", nodeId);
 
-  let innerDiv = document.createElement('div')
-  let innerButton = document.createElement('button')
-  let nodeDropOffDiv = document.createElement('div')
-  let labelSpan = document.createElement('span')
+  innerButton.appendChild(labelSpan);
+  innerDiv.appendChild(innerButton);
 
+  innerDiv.appendChild(nodeDropOffDiv);
 
-  innerDiv.classList.add('node-container')
-  innerButton.setAttribute('draggable', true)
-  innerButton.setAttribute('id', nodeId)
-  innerButton.classList.add('node')
-  labelSpan.innerText = label
-  nodeDropOffDiv.innerHTML = `-`
-  nodeDropOffDiv.classList.add('drop-off')
-  nodeDropOffDiv.setAttribute('data-nodeId', nodeId)
-
-  innerButton.appendChild(labelSpan)
-  innerDiv.appendChild(innerButton)
-
-  innerDiv.appendChild(nodeDropOffDiv)
-
-  return innerDiv
-
-}
+  return innerDiv;
+};
 
 const drawNode = (node, ulElement) => {
   const newLi = document.createElement("li");
   const innerUl = document.createElement("ul");
 
-  let innerDiv = createNodeElement(node)
-  newLi.innerHTML = innerDiv.outerHTML
-
+  let innerDiv = createNodeElement(node);
+  newLi.innerHTML = innerDiv.outerHTML;
 
   let childUl;
 
@@ -158,10 +163,9 @@ const drawNode = (node, ulElement) => {
   return childUl;
 };
 
-
 const undrawTree = () => {
-  rootUl.innerHTML = ''
-}
+  rootUl.innerHTML = "";
+};
 
 const drawTree = () => {
   let rootUl = drawRoot();
@@ -169,123 +173,114 @@ const drawTree = () => {
 };
 
 const refreshTree = () => {
-  undrawTree()
-  drawTree()
-  addDragAndDrop()
-}
-
-
+  undrawTree();
+  drawTree();
+  addDragAndDrop();
+};
 
 const addDragAndDrop = () => {
-  let nodes = document.querySelectorAll('.node')
-  let dropOffs = document.querySelectorAll('.drop-off')
+  let nodes = document.querySelectorAll(".node");
+  let dropOffs = document.querySelectorAll(".drop-off");
 
   let nodeBeingDragged;
   let targetedDroppOff;
 
   const changeNodeParent = () => {
-    let draggedNodeId = parseInt(nodeBeingDragged.getAttribute('id'));
-    let dropOffParentId = parseInt(targetedDroppOff.getAttribute('data-nodeId'))
-    let foundNode = findNodeById(draggedNodeId)
-    let dropOffNode = findNodeById(dropOffParentId)
+    let draggedNodeId = parseInt(nodeBeingDragged.getAttribute("id"));
+    let dropOffParentId = parseInt(targetedDroppOff.getAttribute("data-nodeId"));
+    let foundNode = findNodeById(draggedNodeId);
+    let dropOffNode = findNodeById(dropOffParentId);
 
-    let dropOffNodeChildren = getNodeChildrenById(dropOffParentId)
-    let draggedNodeChildren = getNodeChildrenById(draggedNodeId)
-    let leftNode = dropOffNodeChildren[0]
+    let dropOffNodeChildren = getNodeChildrenById(dropOffParentId);
+    let draggedNodeChildren = getNodeChildrenById(draggedNodeId);
+    let leftNode = dropOffNodeChildren[0];
 
     // dont allow dragging nodes to the existing parent
-    if (foundNode.parentId === dropOffParentId) return
+    if (foundNode.parentId === dropOffParentId) return;
     if (!leftNode && foundNode.parentId === null) {
-      return
+      return;
     }
 
     if ((foundNode.parentId === null && leftNode) || (draggedNodeId === dropOffParentId && leftNode) || (draggedNodeId === dropOffNode.parentId && !leftNode)) {
-      let temp = JSON.parse(JSON.stringify(leftNode ? leftNode : dropOffNode))
+      let temp = JSON.parse(JSON.stringify(leftNode ? leftNode : dropOffNode));
+
       if (leftNode) {
-        leftNode.label = foundNode.label
+        leftNode.label = foundNode.label;
       } else {
-        dropOffNode.label = foundNode.label
+        dropOffNode.label = foundNode.label;
       }
 
-      foundNode.label = temp.label
+      foundNode.label = temp.label;
     } else if (dropOffNodeChildren.length === 1) {
       if (draggedNodeChildren[0]) {
-        draggedNodeChildren[0].parentId = foundNode.parentId
-
+        draggedNodeChildren[0].parentId = foundNode.parentId;
       }
-      foundNode.parentId = dropOffParentId
-    } else if (dropOffNodeChildren.length) {
+      foundNode.parentId = dropOffParentId;
+    } else if (dropOffNodeChildren.length === 2) {
+      let temp = JSON.parse(JSON.stringify(leftNode));
 
-      let temp = JSON.parse(JSON.stringify(leftNode))
+      leftNode.parentId = foundNode.parentId;
+      foundNode.parentId = temp.parentId;
 
+      draggedNodeChildren.forEach((childNode) => {
+        childNode.parentId = leftNode.nodeId;
+      });
+    } 
+    // else if(dropOffNodeChildren.length === 0){
 
-      leftNode.parentId = foundNode.parentId
-      foundNode.parentId = temp.parentId
+    // }
+    else{
+      console.log("TEst")
+      console.log("changeNodeParent -> foundNode.parentId", foundNode.parentId)
 
-      draggedNodeChildren.forEach(childNode => {
-        childNode.parentId = leftNode.nodeId
-      })
-
-
-    } else {
-      foundNode.parentId = dropOffParentId
-
+      foundNode.parentId = dropOffParentId;
+      console.log("changeNodeParent -> dropOffParentId", dropOffParentId)
+      
     }
 
-    refreshTree()
-  }
+    refreshTree();
+  };
 
   // drag functions
   const dragStart = (e) => {
-    nodeBeingDragged = e.target
-  }
+    nodeBeingDragged = e.target;
+  };
 
   const dragEnd = () => {
-    nodeBeingDragged = null
-  }
+    nodeBeingDragged = null;
+  };
 
   // dropOffs functions
   const dragOver = (e) => {
-    e.preventDefault()
-    e.target.classList.add('hovered')
-  }
-  const dragEnter = () => {
-
-  }
+    e.preventDefault();
+    e.target.classList.add("hovered");
+  };
+  const dragEnter = () => {};
   const dragLeave = (e) => {
-    console.log(e.target)
-    e.target.classList.remove('hovered')
-
-  }
+    console.log(e.target);
+    e.target.classList.remove("hovered");
+  };
   const dragDrop = (e) => {
-    console.log('dropped')
-    e.target.classList.remove('hovered')
-    targetedDroppOff = e.target
-    changeNodeParent()
-  }
+    console.log("dropped");
+    e.target.classList.remove("hovered");
+    targetedDroppOff = e.target;
+    changeNodeParent();
+  };
 
   // dropOffs listeners
-  dropOffs.forEach(dropOff => {
-    dropOff.addEventListener('dragover', dragOver)
-    dropOff.addEventListener('dragenter', dragEnter)
-    dropOff.addEventListener('dragleave', dragLeave)
-    dropOff.addEventListener('drop', dragDrop)
-
-  })
-
+  dropOffs.forEach((dropOff) => {
+    dropOff.addEventListener("dragover", dragOver);
+    dropOff.addEventListener("dragenter", dragEnter);
+    dropOff.addEventListener("dragleave", dragLeave);
+    dropOff.addEventListener("drop", dragDrop);
+  });
 
   // nodes listeners
-  nodes.forEach(node => {
-    node.addEventListener('dragstart', dragStart);
-    node.addEventListener('dragend', dragEnd);
-  })
-
-
-
-
-}
-
-
+  nodes.forEach((node) => {
+    node.addEventListener("dragstart", dragStart);
+    node.addEventListener("dragend", dragEnd);
+  });
+};
 
 drawTree();
-addDragAndDrop()
+addDragAndDrop();
